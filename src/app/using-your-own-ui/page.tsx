@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function UsingYourOwnUi() {
   return (
     <main>
-      <h1>Using your own UI</h1>
+      <h1>Self Hosted Login</h1>
 
       <h2>Sign-up</h2>
       <ul>

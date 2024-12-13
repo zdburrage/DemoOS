@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 ::selection {
   background-color: #003eff3e;
 }
@@ -8,10 +13,11 @@ body {
 }
 
 a {
-  color: black;
+  color: #6363f1;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   text-decoration-color: #888;
+  text-decoration: underline;
 }
 
 /* back link */
@@ -32,6 +38,8 @@ main {
 }
 
 h1 {
+  font-size: xx-large;
+  font-weight: bold;
   text-align: center;
   margin: 0;
   margin-top: auto;
@@ -42,6 +50,7 @@ h1:has(+ h2) {
 }
 
 h2 {
+  font-weight: bold;
   text-align: center;
   margin: 0;
   margin-bottom: 32px;
@@ -82,6 +91,14 @@ input {
   height: 48px;
   padding: 0 12px;
 }
+button {
+  background-color: #6363f1;
+  color: white;
+}
+
+button:hover {
+  color: lightgray;
+}
 
 button,
 :where(main, form) > a {
@@ -90,8 +107,6 @@ button,
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-  background-color: black;
-  color: white;
   border-radius: 4px;
   font-size: 20px;
   height: 48px;
