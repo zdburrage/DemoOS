@@ -32,8 +32,6 @@ export default async function WithSession() {
 
             <button  onClick={signOut}>Sign-out</button>
         </>
-
-        
       ) : (
         <>
           <h2>Sign-in</h2>
