@@ -19,7 +19,7 @@ export default function SignInWithGitHubOAuth({
   const githubOAuthUrl = workos.userManagement.getAuthorizationUrl({
     clientId: process.env.WORKOS_CLIENT_ID || '',
     provider: 'GitHubOAuth',
-    redirectUri: 'http://localhost:3000/using-your-own-ui/sign-in/github-oauth/callback',
+    redirectUri: `${process.env.ROOT_DOMAIN}/using-your-own-ui/sign-in/github-oauth/callback`,
   });
 
   const result = JSON.parse(String(searchParams.response ?? '{ "error": null }'));

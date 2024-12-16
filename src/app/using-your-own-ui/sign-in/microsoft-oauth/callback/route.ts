@@ -29,7 +29,7 @@ export async function GET(request: Request) {
 
   if (response) {
     redirect(
-      `http://localhost:3000/using-your-own-ui/sign-in/microsoft-oauth?response=${JSON.stringify(
+      `${process.env.ROOT_DOMAIN}/using-your-own-ui/sign-in/microsoft-oauth?response=${JSON.stringify(
         response
       )}`
     );

@@ -19,7 +19,7 @@ export async function sendReset(prevState: any, formData: FormData) {
     const email = String(formData.get('email'));
     return await workos.userManagement.sendPasswordResetEmail({
       email,
-      passwordResetUrl: `http://localhost:3000/using-your-own-ui/reset-password?email=${email}`,
+      passwordResetUrl: `${process.env.ROOT_DOMAIN}/using-your-own-ui/reset-password?email=${email}`,
     });
   } catch (error) {
     return { error: JSON.parse(JSON.stringify(error)) };

@@ -19,7 +19,7 @@ export default function SignInWithGoogleOAuth({
   const googleOAuthUrl = workos.userManagement.getAuthorizationUrl({
     clientId: process.env.WORKOS_CLIENT_ID || '',
     provider: 'GoogleOAuth',
-    redirectUri: 'http://localhost:3000/using-your-own-ui/sign-in/google-oauth/callback',
+    redirectUri: `${process.env.ROOT_DOMAIN}/using-your-own-ui/sign-in/google-oauth/callback`,
   });
 
   const result = JSON.parse(String(searchParams.response ?? '{ "error": null }'));

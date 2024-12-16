@@ -18,7 +18,7 @@ export default async function WithSession() {
   const authKitUrl = workos.userManagement.getAuthorizationUrl({
     clientId: process.env.WORKOS_CLIENT_ID || '',
     provider: 'authkit',
-    redirectUri: 'http://localhost:3000/using-hosted-authkit/with-session/callback',
+    redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/with-session/callback`,
   });
 
   return (
@@ -32,7 +32,7 @@ export default async function WithSession() {
 
             <button  onClick={signOut}>Sign-out</button>
         </>
-        
+
       ) : (
         <>
           <h2>Sign-in</h2>
