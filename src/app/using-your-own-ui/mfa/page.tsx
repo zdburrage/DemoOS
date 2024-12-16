@@ -1,9 +1,8 @@
 'use client';
 
-import { useFormState } from 'react-dom';
 import { signIn, verifyTotp } from './mfa';
 import Image from 'next/image';
-
+import { useFormState } from 'react-dom';
 export default function Mfa() {
   // This example uses Next.js server actions to call functions on the server side.
   //

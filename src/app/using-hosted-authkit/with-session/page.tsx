@@ -30,14 +30,7 @@ export default async function WithSession() {
           <h2>Welcome back{user?.firstName && `, ${user?.firstName}`}</h2>
           <p>You are now authenticated into the application.</p>
 
-          <form
-            action={async () => {
-              'use server';
-              await signOut();
-            }}
-          >
-            <button type="submit">Sign-out</button>
-          </form>
+            <button  onClick={signOut}>Sign-out</button>
         </>
       ) : (
         <>
