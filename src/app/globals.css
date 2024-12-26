@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 ::selection {
   background-color: #003eff3e;
 }

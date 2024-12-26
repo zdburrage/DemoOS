@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import BackLink from './back-link';
+import '@radix-ui/themes/styles.css'; 
+
 
 const inter = Inter({ subsets: ['latin'] });
 
