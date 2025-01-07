@@ -40,7 +40,10 @@ export default function UsingYourOwnUi() {
       <h2>Other</h2>
       <ul>
         <li>
-          <Link href="/using-your-own-ui/mfa">Multi-Factor Auth</Link>
+          <Link href="/using-your-own-ui/mfa">Multi-Factor Auth (TOTP)</Link>
+        </li>
+        <li>
+          <Link href="/using-your-own-ui/mfa/sms/enroll">Multi-Factor Auth (SMS)</Link>
         </li>
         <li>
           <Link href="/using-your-own-ui/verify-email">Verify email</Link>

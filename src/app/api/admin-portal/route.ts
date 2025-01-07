@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import WorkOS, { GeneratePortalLinkIntent } from '@workos-inc/node';
+import { WorkOS, GeneratePortalLinkIntent} from '@workos-inc/node';
 import { AdminPortalLinks } from '@/types/workos';
 
 const workos = new WorkOS(process.env.WORKOS_API_KEY!);

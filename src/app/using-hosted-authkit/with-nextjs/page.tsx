@@ -1,12 +1,12 @@
 
 import { Button } from '@radix-ui/themes';
-import { getSignInUrl, getSession, signOut } from '@workos-inc/authkit-nextjs';
+import { getSignInUrl, getSession, signOut, withAuth } from '@workos-inc/authkit-nextjs';
 import { UsersManagement, WorkOsWidgets } from '@workos-inc/widgets';
 
 export default async function WithNextjs() {
   // Retrieves the user from the session or returns `null` if no user is signed in
   const session = await getSession();
-  const user = session?.user;
+  const { user } = await withAuth();
   const token = session?.accessToken;
 
   console.log(token)
@@ -23,10 +23,9 @@ export default async function WithNextjs() {
         <>
           <p>Welcome back{user?.firstName && `, ${user?.firstName}`}</p>
 
-          <hr className="h-2 w-3/4 my-8 bg-gray-500 width-100 dark:bg-gray-700"></hr>
-
-          {token ? (
+          {token && session?.role === 'admin' ? (
             <>
+              <hr className="h-2 w-3/4 my-8 bg-gray-500 width-100 dark:bg-gray-700"></hr>
               <h1>Users in Your Organization</h1>
               <WorkOsWidgets
                 theme={{
