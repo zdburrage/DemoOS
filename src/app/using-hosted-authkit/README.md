@@ -1,10 +1,4 @@
-<p align="center">
-    <img src="https://github.com/workos/authkit/assets/896475/9fa7a91e-f5a8-4922-96fb-20a7b478d075" width="72" />
-    <h1 align="center">Using AuthKit's hosted UI</h1>
-    <p align="center">How to use AuthKit with themeable hosted UI</p>
-    <p align="center"><strong><a href="#examples">View the examples</a></strong>&nbsp;&nbsp;·&nbsp;&nbsp;<strong><a href="https://workos.com/docs/user-management">Explore the docs ↗</a></strong></p>
-    <br><br><br>
-</p>
+
 
 ## Setup
 

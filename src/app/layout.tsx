@@ -8,8 +8,8 @@ import '@radix-ui/themes/styles.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AuthKit',
-  description: 'A collection of examples for AuthKit',
+  title: 'Demo OS',
+  description: 'A collection of examples for the WorkOS API/SDK',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
