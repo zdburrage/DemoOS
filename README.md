@@ -10,16 +10,16 @@
 ## Examples
 
 This repository has examples of the following:
-- [SSO](./src/app/using-your-own-ui/sign-in/sso/)
+- [SSO](./src/app/using-your-own-ui/sign-in/sso/):
   Initiate SSO with an organization ID or connection ID
-- [Using AuthKit's hosted UI](./src/app/using-hosted-authkit)
+- [Using AuthKit's hosted UI](./src/app/using-hosted-authkit):
   This is the fastest way to add authentication to your app with AuthKit and WorkOS User Management. It includes a fully themeable hosted UI that handles all of your authentication flows. When you're ready to go to production you can point it to a custom domain (`auth.yourapp.com`) to match your application. Flows are pre-built for:
     * Basic Redirect Flow Without Session
     * Using Next.js AuthKit Library for Sessions
     * Creating Sessions Using the WorkOS API
     * See [this readme](/src//app/using-hosted-authkit/README.md) for more setup information if you want to create sessions
 
-- [Using your own custom UI](./src/app/using-your-own-ui)
+- [Using your own custom UI](./src/app/using-your-own-ui):
   Use all of the features of AuthKit, but build out the UI yourself in your own codebase by integrating directly with the headless WorkOS User Management APIs. Your authentication UI will be self-hosted in your application. Flows are pre-built for:
     * Sign Up (Email/Password)
     * Sign In (Email/Password + Magic Link)
@@ -29,10 +29,11 @@ This repository has examples of the following:
     * Email Verification
     * User Updates
     * User Table Views
-- [Creating new WorkOS Organizations and Generating Admin Portal Links](./src/app/admin-portal/)
+- [Creating new WorkOS Organizations and Generating Admin Portal Links](./src/app/admin-portal/):
   This shows and examples of how developers can add admin portal functionality into their application instead of generating links themselves from the WorkOS dashboard
-- [MFA Enrollment and Verification](./src/app/using-your-own-ui/mfa/)
+- [MFA Enrollment and Verification](./src/app/using-your-own-ui/mfa/):
   Shows an example of how to perform in-app MFA using TOTP/QR Code or SMS
+- [Widgets](./src/app/using-hosted-authkit/with-nextjs/page.tsx): An example of our User Management widget for customer delegated administration of users per organization
 
 ## Prerequisites
 

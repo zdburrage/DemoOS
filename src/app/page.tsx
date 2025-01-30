@@ -16,9 +16,9 @@ export default function Home() {
           <li>
             <Link href="/admin-portal">Organization Setup via Admin Portal</Link>
           </li>
-          {/* <li>
-            <Link href="/fga">FGA</Link>
-          </li> */}
+          <li>
+            <Link href="/audit-logs">Audit Logs</Link>
+          </li>
         </ul>
       </div>
     </main>
