@@ -23,6 +23,7 @@ export async function signUp(prevState: any, formData: FormData) {
       password: String(formData.get('password')),
       firstName: String(formData.get('firstName')),
       lastName: String(formData.get('lastName')),
+      emailVerified: true
     });
   } catch (error) {
     return { error: JSON.parse(JSON.stringify(error)) };

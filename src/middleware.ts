@@ -1,7 +1,23 @@
-// This file is only used in conjunction with the authkit-nextjs library
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
 import { authkitMiddleware } from '@workos-inc/authkit-nextjs';
 
-export default authkitMiddleware({ debug: true, redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/with-nextjs/callback` });
+// Create a middleware function that provides both request and event
+export default function middleware(request: NextRequest, event: any) {
+  try {
+    // Pass both request and event to the authkitMiddleware
+    return authkitMiddleware({
+      middlewareAuth: {
+        enabled: true,
+        unauthenticatedPaths: ['/', '/using-hosted-authkit']
+      },
+      debug: true,
+      redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/with-nextjs/callback`
+    })(request, event);
+  } catch (error) {
+    console.error('Middleware error:', error);
+    return NextResponse.next();
+  }
+}
 
-// Match against pages that require auth, e.g.:
-export const config = { matcher: ['/using-hosted-authkit/with-nextjs', '/api/logout'] };
+export const config = { matcher: ['/using-hosted-authkit/with-nextjs/:path*'] };

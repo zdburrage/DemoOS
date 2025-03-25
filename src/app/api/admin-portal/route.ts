@@ -44,6 +44,7 @@ export async function GET(request: Request) {
       logStreams: logStreamsLink.link
     };
 
+
     return NextResponse.json(links);
   } catch (error) {
     console.error('Error generating admin portal links:', error);

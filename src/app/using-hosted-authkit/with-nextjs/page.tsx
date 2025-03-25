@@ -1,61 +1,60 @@
-
+// app/using-hosted-authkit/with-nextjs/page.tsx
 import { Button } from '@radix-ui/themes';
-import { getSignInUrl, getSession, signOut, withAuth } from '@workos-inc/authkit-nextjs';
-import { UsersManagement, WorkOsWidgets } from '@workos-inc/widgets';
+import { getSignInUrl, withAuth } from '@workos-inc/authkit-nextjs';
+import Link from 'next/link';
+import TokenDisplay from '@/app/components/TokenDisplay';
+
+// Create a server action for sign out
+async function handleSignOut() {
+  'use server';
+  const { signOut } = await import('@workos-inc/authkit-nextjs');
+  await signOut();
+}
 
 export default async function WithNextjs() {
-  // Retrieves the user from the session or returns `null` if no user is signed in
-  const session = await getSession();
-  const { user } = await withAuth();
-  const token = session?.accessToken;
-
-  console.log(token)
-
-
-  // Get the URL to redirect the user to AuthKit to sign in
+  // Get session and user data
+  const { user, sessionId, accessToken } = await withAuth();
+  
+  // Get sign-in URL if needed
   const signInUrl = await getSignInUrl();
 
   return (
     <main>
       <h1>Using hosted AuthKit</h1>
       <h2>With Next.js library</h2>
+      
       {user ? (
         <>
-          <p>Welcome back{user?.firstName && `, ${user?.firstName}`}</p>
-
-          {token && session?.role === 'admin' ? (
-            <>
-              <hr className="h-2 w-3/4 my-8 bg-gray-500 width-100 dark:bg-gray-700"></hr>
-              <h1>Users in Your Organization</h1>
-              <WorkOsWidgets
-                theme={{
-                  appearance: 'light',
-                  accentColor: 'green',
-                  radius: 'medium',
-                }}
-
-              >
-                <UsersManagement authToken={token} />
-              </WorkOsWidgets>
-            </>
-          ) : (
-            <>
-            </>
-          )}
-          <form action={async () => {
-            "use server";
-            await signOut();
-          }}>
+          <p>Welcome back{user?.firstName && `, ${user?.firstName}`}!</p>
+          
+          {/* Link to the profile page */}
+          <div className="mt-4 mb-4">
+            <Link 
+              href={`/using-hosted-authkit/with-nextjs/profile`}
+              className=""
+            >
+              Manage Profile & Sessions
+            </Link>
+          </div>
+          
+          {/* Sign Out button */}
+          <form action={handleSignOut}>
             <Button type="submit" variant="outline">
               Sign Out
             </Button>
           </form>
+          
+          {/* Keep token display in the original page */}
+          <TokenDisplay 
+            accessToken={accessToken} 
+            response={{ user, sessionId }} 
+          />
         </>
       ) : (
-        <a href={signInUrl}>Sign in</a>
+        <a href={signInUrl} className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Sign in
+        </a>
       )}
-
-      <pre>{JSON.stringify(user, null, 2)}</pre>
     </main>
   );
 }
