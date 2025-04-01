@@ -1,48 +1,29 @@
 // app/api/auth/logout/route.ts
 import { WorkOS } from '@workos-inc/node';
-import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
 const workos = new WorkOS(process.env.WORKOS_API_KEY);
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { sessionId } = body;
+    const { sessionId } = await request.json();
     
     if (!sessionId) {
-      return NextResponse.json(
-        { error: 'Session ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Session ID is required' }, { status: 400 });
     }
-
-    // Get the logout URL from WorkOS
-    const url = await workos.userManagement.getLogoutUrl({
-      sessionId: sessionId,
-    });
-
-    // Create response with the logout URL
-    const response = NextResponse.json({ 
-      url,
-      message: 'Logout successful' 
-    });
-
-    // Clear the WorkOS session cookie
-    response.cookies.set('wos-session', '', {
-      expires: new Date(0),
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      httpOnly: true
-    });
-
-    return response;
-
+    
+    // Revoke the session in WorkOS
+    await workos.userManagement.revokeSession({sessionId: sessionId});
+    
+    // Clear the cookies
+    const cookieStore = cookies();
+    cookieStore.delete('workos_access_token');
+    cookieStore.delete('workos_response');
+    
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Logout error:', error);
-    return NextResponse.json(
-      { error: 'Failed to logout' },
-      { status: 500 }
-    );
+    console.error('Error logging out:', error);
+    return NextResponse.json({ error: 'Failed to log out' }, { status: 500 });
   }
 }

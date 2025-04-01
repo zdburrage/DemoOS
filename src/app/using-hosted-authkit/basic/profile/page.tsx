@@ -1,10 +1,10 @@
 // app/using-hosted-authkit/basic/profile/page.tsx
-import { WorkOS } from '@workos-inc/node';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { redirect } from 'next/navigation';
 import WorkOSWidgetsDisplay from '@/app/components/WorkOSWidgetsDisplay';
 import LogoutButton from '@/app/components/LogoutButton';
 import Link from 'next/link';
+import { getSession } from '@/app/lib/session';
 
 // Define the WorkOS JWT payload type
 interface WorkOSJwtPayload extends JwtPayload {
@@ -16,43 +16,17 @@ interface WorkOSJwtPayload extends JwtPayload {
   metadata?: any;
 }
 
-export default function UserProfile({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  // Parse the response from the query parameters
-  const responseParam = searchParams.response || searchParams.token;
-  let result: any = { error: null };
-  let accessToken = '';
+export default async function UserProfile() {
+  // Get session from cookies
+  const session = await getSession();
   
-  try {
-    if (typeof responseParam === 'string') {
-      result = JSON.parse(responseParam);
-      accessToken = result.accessToken;
-    } else if (searchParams.accessToken && typeof searchParams.accessToken === 'string') {
-      accessToken = searchParams.accessToken;
-      result = { accessToken };
-    }
-  } catch (err) {
-    console.error('Error parsing response:', err);
-  }
-  
-  // If no access token, redirect to the main page
-  if (!accessToken) {
+  // If no session, redirect to the main page
+  if (!session || !session.accessToken) {
     redirect('/using-hosted-authkit/basic');
   }
   
-  // Decode the token
-  let decodedToken: WorkOSJwtPayload | null = null;
-  try {
-    decodedToken = accessToken ? jwtDecode<WorkOSJwtPayload>(accessToken) : null;
-  } catch (err) {
-    console.error('Error decoding token:', err);
-  }
-  
-  // Get the session ID
-  const sessionId = decodedToken?.sid || '';
+  const accessToken = session.accessToken;
+  const sessionId = session.sessionId;
   
   // If no session ID, redirect to the main page
   if (!sessionId) {
@@ -66,10 +40,9 @@ export default function UserProfile({
       
       <div className="mb-4">
         <Link href="/using-hosted-authkit/basic" className="text-blue-500 hover:underline">
-          &larr; Back to Basic Example
+          &larr; Back
         </Link>
       </div>
-      
       
       {/* WorkOS Widgets */}
       <WorkOSWidgetsDisplay authToken={accessToken} sessionId={sessionId} />

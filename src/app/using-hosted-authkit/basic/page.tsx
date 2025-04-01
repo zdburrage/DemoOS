@@ -4,6 +4,7 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 import Link from 'next/link';
 import LogoutButton from '@/app/components/LogoutButton';
 import TokenDisplay from '@/app/components/TokenDisplay';
+import { getSession } from '@/app/lib/session';
 
 // Define the WorkOS JWT payload type
 interface WorkOSJwtPayload extends JwtPayload {
@@ -17,7 +18,7 @@ interface WorkOSJwtPayload extends JwtPayload {
 
 const workos = new WorkOS(process.env.WORKOS_API_KEY);
 
-export default function Basic({
+export default async function Basic({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -28,47 +29,66 @@ export default function Basic({
     redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/basic/callback`,
   });
 
+  // Try to get session from cookies first
+  const session = await getSession();
+  
+  // If no session, check query params (for initial login)
   let decodedToken: WorkOSJwtPayload | null = null;
-  const result = JSON.parse(String(searchParams.response ?? '{ "error": null }'));
-  const accessToken = result.accessToken;
-
-  try {
-    decodedToken = accessToken ? jwtDecode<WorkOSJwtPayload>(accessToken) : null;
-  } catch (err) {
-    console.error('Error decoding token:', err);
+  let result;
+  let accessToken = '';
+  
+  if (session) {
+    // Use session data
+    accessToken = session.accessToken;
+    result = session.fullResponse || { 
+      accessToken, 
+      user: session.user 
+    };
+    
+    try {
+      decodedToken = jwtDecode<WorkOSJwtPayload>(accessToken);
+    } catch (err) {
+      console.error('Error decoding token:', err);
+    }
+  } else if (searchParams.response) {
+    // Use query params data (initial login)
+    result = JSON.parse(String(searchParams.response));
+    accessToken = result.accessToken;
+    
+    try {
+      decodedToken = accessToken ? jwtDecode<WorkOSJwtPayload>(accessToken) : null;
+    } catch (err) {
+      console.error('Error decoding token:', err);
+    }
   }
 
   // Get the session ID using 'sid'
-  const sessionId = decodedToken?.sid || '';
+  const sessionId = decodedToken?.sid || session?.sessionId || '';
 
   return (
     <main>
       <h1>Using hosted AuthKit</h1>
-      <h2>Basic example</h2>
-
-      {!decodedToken ? (
-        <a href={authKitUrl} >
+      {!decodedToken && !session ? (
+        <a href={authKitUrl}>
           Sign-in with AuthKit
         </a>
       ) : (
         <div>
-          <p>Welcome back{decodedToken.first_name && `, ${decodedToken.first_name}`}!</p>
-
           {/* Link to the profile page */}
           <div className="mt-4 mb-4">
             <Link
-              href={`/using-hosted-authkit/basic/profile?accessToken=${encodeURIComponent(accessToken)}`}
+              href={`/using-hosted-authkit/basic/profile`}
               className=""
             >
               Manage Profile & Sessions
             </Link>
           </div>
-
         </div>
       )}
 
       {/* Keep token display in the original page */}
       <TokenDisplay accessToken={accessToken} response={result} />
+      
       {/* Logout button */}
       {sessionId && (
         <div className="mt-2">

@@ -8,12 +8,6 @@ export default function UsingHostedAuthKit() {
         <li>
           <Link href="/using-hosted-authkit/basic">Basic example</Link>
         </li>
-        <li>
-          <Link href="/using-hosted-authkit/with-nextjs">With Next.js library</Link>
-        </li>
-        <li>
-          <Link href="/using-hosted-authkit/with-session">With session</Link>
-        </li>
       </ul>
     </main>
   );

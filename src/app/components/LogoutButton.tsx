@@ -1,15 +1,15 @@
-// components/LogoutButton.tsx
-'use client'
+// app/components/LogoutButton.tsx
+'use client';
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 interface LogoutButtonProps {
   sessionId: string;
 }
 
 export default function LogoutButton({ sessionId }: LogoutButtonProps) {
-  const router = useRouter()
-
+  const router = useRouter();
+  
   const handleLogout = async () => {
     try {
       const response = await fetch('/api/logout', {
@@ -18,30 +18,27 @@ export default function LogoutButton({ sessionId }: LogoutButtonProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ sessionId }),
-        credentials: 'include', // Important for cookie handling
-      })
-
-      if (!response.ok) {
-        throw new Error('Logout failed')
-      }
-
-      const data = await response.json()
+      });
       
-      // Redirect to the WorkOS logout URL
-      if (data.url) {
-        window.location.href = data.url
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to log out');
       }
+      
+      // Redirect to the main page
+      router.push('/');
     } catch (error) {
-      console.error('Logout error:', error)
+      console.error('Error logging out:', error);
+      alert('Failed to log out. Please try again.');
     }
-  }
-
+  };
+  
   return (
-    <button
+    <button 
       onClick={handleLogout}
-      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-auto"
+      className="inline-block px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
     >
       Sign Out
     </button>
-  )
+  );
 }

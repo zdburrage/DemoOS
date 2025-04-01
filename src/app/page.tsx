@@ -11,7 +11,7 @@ export default function Home() {
             <Link href="/using-your-own-ui">Self Hosted Login (WorkOS API)</Link>
           </li>
           <li>
-            <Link href="/using-hosted-authkit">WorkOS Hosted Login Portal (AuthKit)</Link>
+            <Link href="/using-hosted-authkit/basic">WorkOS Hosted Login Portal (AuthKit)</Link>
           </li>
           <li>
             <Link href="/admin-portal">Organization Setup via Admin Portal</Link>

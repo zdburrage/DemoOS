@@ -1,4 +1,3 @@
-import { getSession } from '@workos-inc/authkit-nextjs';
 import { WorkOS } from '@workos-inc/node'
 import { NextResponse } from 'next/server'
 
