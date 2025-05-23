@@ -46,5 +46,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/using-hosted-authkit/basic/profile/:path*'],
+  matcher: ['/using-hosted-authkit/basic/profile/:path*', '/api/webhooks/workos'],
 };

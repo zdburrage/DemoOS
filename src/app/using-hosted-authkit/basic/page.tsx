@@ -5,6 +5,8 @@ import Link from 'next/link';
 import LogoutButton from '@/app/components/LogoutButton';
 import TokenDisplay from '@/app/components/TokenDisplay';
 import { getSession } from '@/app/lib/session';
+import { createClient } from "@workos-inc/authkit-js";
+import { SignInButton } from './SignInButton';
 
 // Define the WorkOS JWT payload type
 interface WorkOSJwtPayload extends JwtPayload {
@@ -28,6 +30,11 @@ export default async function Basic({
     provider: 'authkit',
     redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/basic/callback`,
   });
+
+  // const authkit = await createClient(process.env.WORKOS_CLIENT_ID || '', {
+  //   redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/basic/callback`,
+  //   devMode: true
+  // });
 
   // Try to get session from cookies first
   const session = await getSession();
@@ -69,9 +76,7 @@ export default async function Basic({
     <main>
       <h1>Using hosted AuthKit</h1>
       {!decodedToken && !session ? (
-        <a href={authKitUrl}>
-          Sign-in with AuthKit
-        </a>
+        <SignInButton />
       ) : (
         <div>
           {/* Link to the profile page */}

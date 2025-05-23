@@ -16,9 +16,9 @@ export default function SignInWithSSO({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const ssoUrl = workos.userManagement.getAuthorizationUrl({
+  const ssoUrl = workos.sso.getAuthorizationUrl({
     clientId: process.env.WORKOS_CLIENT_ID || '',
-    organizationId: process.env.SSO_ENABLED_ORGANIZATION_ID || '',
+    organization: process.env.SSO_ENABLED_ORGANIZATION_ID || '',
     redirectUri: `${process.env.ROOT_DOMAIN}/using-your-own-ui/sign-in/sso/callback`,
   });
 

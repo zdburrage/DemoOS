@@ -2,7 +2,7 @@
 'use client';
 
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 
 // Define the WorkOS JWT payload type
 interface WorkOSJwtPayload extends JwtPayload {
@@ -17,6 +17,53 @@ interface WorkOSJwtPayload extends JwtPayload {
 interface TokenDisplayProps {
   accessToken?: string;
   response?: any;
+}
+
+function renderJSON(value: any, indent = 0): ReactNode {
+  const pad = (n: number) => Array(n + 1).join('  ');
+  if (value === null) {
+    return <span className="null">null</span>;
+  }
+  if (typeof value === 'string') {
+    return <span className="string">"{value}"</span>;
+  }
+  if (typeof value === 'number') {
+    return <span className="number">{value}</span>;
+  }
+  if (typeof value === 'boolean') {
+    return <span className="boolean">{value ? 'true' : 'false'}</span>;
+  }
+  if (Array.isArray(value)) {
+    if (value.length === 0) return <span>[]</span>;
+    return (
+      <>
+        {'['}
+        <br />
+        {value.map((item, i) => (
+          <span key={i}>
+            {pad(indent + 2)}{renderJSON(item, indent + 2)}{i < value.length - 1 ? ',' : ''}<br />
+          </span>
+        ))}
+        {pad(indent)}{']'}
+      </>
+    );
+  }
+  if (typeof value === 'object') {
+    const keys = Object.keys(value);
+    if (keys.length === 0) return <span>{'{}'}</span>;
+    return (
+      <>
+        {'{'}<br />
+        {keys.map((key, i) => (
+          <span key={key}>
+            {pad(indent + 2)}<span className="property">"{key}"</span>: {renderJSON(value[key], indent + 2)}{i < keys.length - 1 ? ',' : ''}<br />
+          </span>
+        ))}
+        {pad(indent)}{'}'}
+      </>
+    );
+  }
+  return String(value);
 }
 
 export default function TokenDisplay({ accessToken, response }: TokenDisplayProps) {
@@ -41,19 +88,23 @@ export default function TokenDisplay({ accessToken, response }: TokenDisplayProp
   }, [accessToken]);
 
   return (
-    <div>
+    <div className="space-y-6">
       {response && (
-        <>
-          <h2>WorkOS Response</h2>
-          <pre>{JSON.stringify(response, null, 2)}</pre>
-        </>
+        <div>
+          <h2 className="text-lg font-semibold mb-3">WorkOS Response</h2>
+          <div className="code-window">
+            <pre>{renderJSON(response)}</pre>
+          </div>
+        </div>
       )}
       
       {decodedToken && (
-        <>
-          <h2>Decoded Access Token</h2>
-          <pre>{JSON.stringify(decodedToken, null, 2)}</pre>
-        </>
+        <div>
+          <h2 className="text-lg font-semibold mb-3">Decoded Access Token</h2>
+          <div className="code-window">
+            <pre>{renderJSON(decodedToken)}</pre>
+          </div>
+        </div>
       )}
     </div>
   );

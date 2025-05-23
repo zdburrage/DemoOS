@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   let response;
 
   try {
-    response = await workos.userManagement.authenticateWithCode({
+    response = await workos.sso.getProfileAndToken({
       clientId: process.env.WORKOS_CLIENT_ID || '',
       code,
     });

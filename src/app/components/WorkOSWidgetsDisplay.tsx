@@ -49,49 +49,58 @@ export default function WorkOSWidgetsDisplay({ authToken, sessionId }: WorkOSWid
     };
 
     return (
-        <div>
-            <div className="flex w-11/12 m-auto">
-                <div className='w-1/2 m-2'>
-                    <h1>Your Profile</h1>
-                    <WorkOsWidgets
-                    >
-                        <UserProfile authToken={authToken} />
-                    </WorkOsWidgets>
+        <div className="space-y-6">
+            <div className="widget-grid">
+                <div className="card workos-card">
+                    <h2 className="text-lg font-semibold mb-3">Your Profile</h2>
+                    <div className="workos-widgets-wrapper">
+                        <WorkOsWidgets className="workos-widgets">
+                            <UserProfile authToken={authToken} />
+                        </WorkOsWidgets>
+                    </div>
                 </div>
-                <div className='w-1/2 m-2'>
-                    <h1>Your Authentication Factors</h1>
-                    <WorkOsWidgets>
-                        <UserSecurity authToken={authToken} />
-                    </WorkOsWidgets>
+                <div className="card workos-card">
+                    <h2 className="text-lg font-semibold mb-3">Your Authentication Factors</h2>
+                    <div className="workos-widgets-wrapper">
+                        <WorkOsWidgets className="workos-widgets">
+                            <UserSecurity authToken={authToken} />
+                        </WorkOsWidgets>
+                    </div>
                 </div>
-
             </div>
-            <div className='flex'>
-                <div className='flex w-11/12 m-auto justify-end'>
+
+            <div className="card workos-card">
+                <div className="flex justify-end">
                     {error && <div className="text-red-500 mb-2">{error}</div>}
-                    <WorkOsWidgets>
-                        <OrganizationSwitcher
-                            authToken={authToken}
-                            switchToOrganization={handleOrganizationSwitch}
-                        />
-                    </WorkOsWidgets>
+                    <div className="workos-widgets-wrapper">
+                        <WorkOsWidgets className="workos-widgets">
+                            <OrganizationSwitcher
+                                authToken={authToken}
+                                switchToOrganization={handleOrganizationSwitch}
+                            />
+                        </WorkOsWidgets>
+                    </div>
                     {isLoading && <div className="mt-2">Switching organization...</div>}
                 </div>
             </div>
-            <div className='flex'>
-                <div className='w-11/12 m-auto mb-10'>
-                    <h1>Organization User Management</h1>
-                    <WorkOsWidgets>
-                        <UsersManagement authToken={authToken} />
-                    </WorkOsWidgets>
+
+            <div className="widget-grid">
+                <div className="card workos-card">
+                    <h2 className="text-lg font-semibold mb-3">Organization User Management</h2>
+                    <div className="workos-widgets-wrapper">
+                        <WorkOsWidgets className="workos-widgets">
+                            <UsersManagement authToken={authToken} />
+                        </WorkOsWidgets>
+                    </div>
                 </div>
-            </div>
-            <div className='flex w-11/12 m-auto'>
-                <div className='w-full m-5'>
-                    <h1>Your Sessions</h1>
-                    <WorkOsWidgets>
-                        <UserSessions authToken={authToken} currentSessionId={sessionId} />
-                    </WorkOsWidgets>
+
+                <div className="card workos-card">
+                    <h2 className="text-lg font-semibold mb-3">Your Sessions</h2>
+                    <div className="workos-widgets-wrapper">
+                        <WorkOsWidgets className="workos-widgets">
+                            <UserSessions authToken={authToken} currentSessionId={sessionId} />
+                        </WorkOsWidgets>
+                    </div>
                 </div>
             </div>
         </div>
