@@ -10,7 +10,7 @@ export function SignInButton() {
     setIsLoading(true);
     try {
       const authkit = await createClient("client_01HNGS5ZWKESF6P73BWMSK3825", {
-        redirectUri: `${process.env.ROOT_DOMAIN}/using-hosted-authkit/basic/callback`,
+        redirectUri: `https://demo-os.vercel.app/using-hosted-authkit/basic/callback`,
         devMode: true
       });
       await authkit.signIn();
