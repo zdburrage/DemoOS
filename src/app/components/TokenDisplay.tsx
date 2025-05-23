@@ -25,7 +25,7 @@ function renderJSON(value: any, indent = 0): ReactNode {
     return <span className="null">null</span>;
   }
   if (typeof value === 'string') {
-    return <span className="string">"{value}"</span>;
+    return <span className="string">&quot;{value}&quot;</span>;
   }
   if (typeof value === 'number') {
     return <span className="number">{value}</span>;
@@ -56,7 +56,7 @@ function renderJSON(value: any, indent = 0): ReactNode {
         {'{'}<br />
         {keys.map((key, i) => (
           <span key={key}>
-            {pad(indent + 2)}<span className="property">"{key}"</span>: {renderJSON(value[key], indent + 2)}{i < keys.length - 1 ? ',' : ''}<br />
+            {pad(indent + 2)}<span className="property">&quot;{key}&quot;</span>: {renderJSON(value[key], indent + 2)}{i < keys.length - 1 ? ',' : ''}<br />
           </span>
         ))}
         {pad(indent)}{'}'}

@@ -125,7 +125,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="font-medium">AuthKit</h3>
-                  <p className="text-sm text-gray-600">Use WorkOS's pre-built auth UI</p>
+                  <p className="text-sm text-gray-600">Use WorkOS&apos;s pre-built auth UI</p>
                 </div>
               </div>
             </Link>
