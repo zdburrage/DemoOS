@@ -85,3 +85,24 @@ This repository has examples of the following:
 
 4. Run the example with `npm run dev` or `yarn dev` and navigate to http://localhost:3000
 5. Once you get familiar with some of the flows, [brand your Authkit hosted page](https://workos.com/docs/user-management/branding)
+
+## Dashboard API Example
+
+Calling `/api/dashboard` returns metrics and a small sample of recent authentication events. Example response:
+
+```json
+{
+  "metrics": {
+    "totalUsers": 42,
+    "totalOrgs": 7,
+    "authEvents": 5
+  },
+  "recentActivity": [
+    {
+      "user": "user_01ABCD",
+      "action": "authentication.sso_succeeded",
+      "time": "2024-05-01T12:30:00.000Z"
+    }
+  ]
+}
+```
