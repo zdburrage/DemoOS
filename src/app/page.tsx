@@ -74,11 +74,15 @@ export default function Home() {
     );
   }
 
-  const { totalUsers = 0, totalOrgs = 0 } = data.metrics;
+  const {
+    totalUsers = 0,
+    totalOrgs = 0,
+    authEvents = 0,
+  } = data.metrics;
 
   return (
     <main>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Link href="/users" className="card hover:bg-gray-50 transition-colors">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-gray-600">Total Users</h3>
@@ -96,6 +100,15 @@ export default function Home() {
           <p className="text-2xl font-semibold">{(data?.metrics.totalOrgs || 0).toLocaleString()}</p>
           <p className="text-sm text-gray-600 mt-2">Connected organizations</p>
         </Link>
+
+        <div className="card">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-gray-600">Auth Events</h3>
+            <span className="badge badge-success">Active</span>
+          </div>
+          <p className="text-2xl font-semibold">{authEvents.toLocaleString()}</p>
+          <p className="text-sm text-gray-600 mt-2">Events in the last 30 days</p>
+        </div>
       </div>
 
       <div className="grid gap-6 mt-6 md:grid-cols-2">
@@ -143,6 +156,32 @@ export default function Home() {
                 </div>
               </div>
             </Link>
+          </div>
+        </div>
+
+        <div className="card">
+          <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">User</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Action</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.recentActivity.map((activity, index) => (
+                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-3 px-4">{activity.user}</td>
+                    <td className="py-3 px-4">{activity.action}</td>
+                    <td className="py-3 px-4 text-sm text-gray-600">
+                      {new Date(activity.time).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
